@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>for you — blue</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            background: #f2ece8;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: -apple-system, 'Helvetica Neue', 'Segoe UI', 'Georgia', serif;
+            padding: 24px;
+        }
+
+        /* card utama — clean, understated */
+        .card {
+            max-width: 560px;
+            width: 100%;
+            background: #ffffff;
+            border-radius: 32px;
+            padding: 40px 36px 48px;
+            box-shadow: 0 20px 40px -12px rgba(0, 0, 0, 0.08);
+            text-align: center;
+            transition: all 0.2s ease;
+        }
+
+        /* photo — simple circle */
+        .photo-frame {
+            width: 128px;
+            height: 128px;
+            margin: 0 auto 24px auto;
+            border-radius: 50%;
+            overflow: hidden;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
+        }
+
+        .photo-frame img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .photo-placeholder {
+            width: 100%;
+            height: 100%;
+            background: #eae2de;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            color: #8b7a72;
+            font-weight: 400;
+        }
+
+        /* greeting — minimal */
+        .greeting {
+            font-size: 14px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            color: #b0a097;
+            margin-bottom: 20px;
+            font-weight: 400;
+        }
+
+        /* message — clean typography */
+        .message {
+            margin: 20px 0 24px;
+        }
+
+        .message p {
+            font-size: 17px;
+            line-height: 1.65;
+            color: #2c2a2a;
+            margin-bottom: 14px;
+            font-weight: 380;
+            font-family: 'Georgia', serif;
+        }
+
+        .message p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* heart — small, no drama */
+        .heart {
+            font-size: 40px;
+            margin: 16px 0 8px;
+            opacity: 0.85;
+            letter-spacing: 0;
+        }
+
+        /* signature */
+        .signature {
+            font-size: 13px;
+            color: #a28e84;
+            border-top: 1px solid #efe5e0;
+            padding-top: 22px;
+            margin-top: 18px;
+            font-style: normal;
+            font-weight: 400;
+        }
+
+        .small-note {
+            font-size: 12px;
+            color: #b7a59c;
+            margin-top: 14px;
+            font-weight: 400;
+        }
+
+        /* music bar — sleek */
+        .music-bar {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            background: #f7f3f1;
+            padding: 8px 24px;
+            border-radius: 60px;
+            margin-top: 28px;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: 1px solid #efe3de;
+        }
+
+        .music-bar:hover {
+            background: #f3edeb;
+        }
+
+        .music-text {
+            font-size: 13px;
+            font-weight: 450;
+            color: #6b5b53;
+            letter-spacing: 0.2px;
+        }
+
+        .music-note {
+            font-size: 16px;
+            color: #9b847a;
+        }
+
+        /* wave visual */
+        .wave-line {
+            display: flex;
+            align-items: center;
+            gap: 3px;
+        }
+
+        .wave-line span {
+            width: 2px;
+            height: 10px;
+            background: #bdaaa0;
+            border-radius: 2px;
+            transition: all 0.1s;
+        }
+
+        .wave-line span.active {
+            animation: wave 0.9s infinite ease alternate;
+        }
+
+        .wave-line span:nth-child(1) { animation-delay: 0s; }
+        .wave-line span:nth-child(2) { animation-delay: 0.2s; }
+        .wave-line span:nth-child(3) { animation-delay: 0.4s; }
+        .wave-line span:nth-child(4) { animation-delay: 0.1s; }
+
+        @keyframes wave {
+            0% { height: 8px; opacity: 0.5; }
+            100% { height: 18px; opacity: 1; }
+        }
+
+        /* fallback button — minimal */
+        .music-fallback {
+            background: none;
+            border: 1px solid #ded3ce;
+            padding: 8px 22px;
+            border-radius: 60px;
+            font-size: 12px;
+            color: #8e756b;
+            margin-top: 14px;
+            display: none;
+            cursor: pointer;
+            font-family: inherit;
+            transition: 0.15s;
+        }
+
+        .music-fallback:hover {
+            background: #f5eeeb;
+        }
+
+        @media (max-width: 500px) {
+            .card {
+                padding: 32px 24px 40px;
+            }
+            .message p {
+                font-size: 15px;
+            }
+            .photo-frame {
+                width: 110px;
+                height: 110px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="card">
+    <!-- photo section -->
+    <div class="photo-frame">
+        <img src="foto.jpg" alt="photo" id="userPhoto">
+        <div class="photo-placeholder" style="display: none;">add photo</div>
+    </div>
+
+    <div class="greeting">
+        for you
+    </div>
+
+    <div class="message">
+        <p>you are the reason my days feel softer,</p>
+        <p>the quiet kind of beautiful that stays.</p>
+        <p>every little thing you do makes my world better,</p>
+        <p>even without trying.</p>
+        <p>thank you for just being you.</p>
+    </div>
+
+    <div class="heart">
+        ♡
+    </div>
+
+    <div class="signature">
+        always, for you
+    </div>
+    <div class="small-note">
+        you mean more than words can say
+    </div>
+
+    <!-- music control -->
+    <div class="music-bar" id="musicControl">
+        <div class="wave-line" id="waveLine">
+            <span></span><span></span><span></span><span></span>
+        </div>
+        <span class="music-text" id="musicLabel">blue — yung kai</span>
+        <span class="music-note">♫</span>
+    </div>
+    <button class="music-fallback" id="fallbackBtn">play song</button>
+</div>
+
+<audio id="bgAudio" loop preload="auto" style="display: none;">
+    <source src="yung kai - blue (official music video).mp3" type="audio/mpeg">
+</audio>
+
+<script>
+    (function() {
+        const audio = document.getElementById('bgAudio');
+        const musicLabel = document.getElementById('musicLabel');
+        const fallbackBtn = document.getElementById('fallbackBtn');
+        const musicControl = document.getElementById('musicControl');
+        const waveSpans = document.querySelectorAll('.wave-line span');
+
+        function enableMusic() {
+            if (!audio) return;
+            audio.muted = false;
+            audio.volume = 0.5;
+            const playPromise = audio.play();
+            if (playPromise !== undefined) {
+                playPromise.then(() => {
+                    musicLabel.textContent = 'blue ~ playing';
+                    if (fallbackBtn) fallbackBtn.style.display = 'none';
+                    waveSpans.forEach(s => s.classList.add('active'));
+                }).catch(err => {
+                    if (err.name === 'NotAllowedError') {
+                        if (fallbackBtn) fallbackBtn.style.display = 'inline-block';
+                        musicLabel.textContent = 'click to play';
+                    } else {
+                        musicLabel.textContent = 'file missing?';
+                    }
+                });
+            } else {
+                audio.play();
+                musicLabel.textContent = 'blue ~ playing';
+                if (fallbackBtn) fallbackBtn.style.display = 'none';
+                waveSpans.forEach(s => s.classList.add('active'));
+            }
+        }
+
+        if (fallbackBtn) {
+            fallbackBtn.addEventListener('click', enableMusic);
+        }
+
+        if (musicControl) {
+            musicControl.addEventListener('click', (e) => {
+                e.stopPropagation();
+                if (audio && !audio.paused && audio.currentTime > 0 && !audio.muted) {
+                    return;
+                }
+                enableMusic();
+            });
+        }
+
+        // autoplay attempt
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                if (audio) {
+                    audio.muted = false;
+                    audio.volume = 0.5;
+                    const attempt = audio.play();
+                    if (attempt !== undefined) {
+                        attempt.catch(e => {
+                            if (e.name === 'NotAllowedError') {
+                                if (fallbackBtn) fallbackBtn.style.display = 'inline-block';
+                                musicLabel.textContent = 'tap to listen';
+                            }
+                        });
+                    }
+                }
+            }, 100);
+        });
+
+        audio.addEventListener('error', () => {
+            musicLabel.textContent = 'song not found';
+            if (fallbackBtn) {
+                fallbackBtn.style.display = 'inline-block';
+                fallbackBtn.textContent = 'check file';
+            }
+        });
+
+        audio.addEventListener('play', () => {
+            musicLabel.textContent = 'blue ~ playing';
+            if (fallbackBtn) fallbackBtn.style.display = 'none';
+            waveSpans.forEach(s => s.classList.add('active'));
+        });
+
+        // photo handler
+        const photo = document.getElementById('userPhoto');
+        const placeholderDiv = document.querySelector('.photo-placeholder');
+        if (photo) {
+            photo.src = 'foto.jpg';
+            photo.onerror = () => {
+                photo.style.display = 'none';
+                if (placeholderDiv) {
+                    placeholderDiv.style.display = 'flex';
+                    placeholderDiv.textContent = 'add photo';
+                }
+            };
+            photo.onload = () => {
+                if (placeholderDiv) placeholderDiv.style.display = 'none';
+                photo.style.display = 'block';
+            };
+        }
+    })();
+</script>
+</body>
+  </html>
