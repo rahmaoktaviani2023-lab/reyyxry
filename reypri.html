@@ -1,0 +1,214 @@
+mod by reyy nieh
+
+```
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, shrink-to-fit=no">
+    <title>⚠️ DATA HILANG ⚠️</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            user-select: none;
+            -webkit-tap-highlight-color: transparent;
+        }
+        body {
+            background: #000;
+            height: 100vh;
+            overflow: hidden;
+            position: relative;
+            touch-action: none;
+        }
+        #fullscreenVideo {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: 9999;
+            background: #000;
+        }
+        .overlayText {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 10000;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            pointer-events: none;
+            background: rgba(0,0,0,0.7);
+            font-family: 'Courier New', monospace;
+            text-align: center;
+        }
+        .glitchBig {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #ff0000;
+            text-shadow: 0 0 5px #ff0000, 0 0 15px #aa0000;
+            animation: glitchAnim 0.12s infinite;
+            margin-bottom: 20px;
+            letter-spacing: 5px;
+        }
+        .subWarning {
+            font-size: 1.3rem;
+            color: #ff6666;
+            background: #000000aa;
+            padding: 10px 25px;
+            border-radius: 10px;
+            backdrop-filter: blur(8px);
+            border: 1px solid #ff0000;
+            animation: blinkRed 0.5s infinite;
+        }
+        .dataMessage {
+            font-size: 1rem;
+            color: #ff8888;
+            margin-top: 30px;
+            background: #110000cc;
+            padding: 12px 24px;
+            border-radius: 30px;
+            font-weight: bold;
+            letter-spacing: 2px;
+        }
+        @keyframes glitchAnim {
+            0% { transform: skew(0deg); opacity: 1; text-shadow: 3px 0 red; }
+            25% { transform: skew(2deg); text-shadow: -3px 0 #ff4400; }
+            50% { transform: skew(-2deg); text-shadow: 0 0 8px #ff0000; }
+            75% { transform: skew(1deg); text-shadow: 2px -1px #ff3300; }
+            100% { transform: skew(0deg); text-shadow: -2px 2px #cc0000; }
+        }
+        @keyframes blinkRed {
+            0% { border-color: #ff0000; box-shadow: 0 0 5px red; }
+            100% { border-color: #ff8888; box-shadow: 0 0 20px #ff3300; }
+        }
+    </style>
+</head>
+<body>
+
+<video id="fullscreenVideo" autoplay muted playsinline>
+    <source src="vidd.mp4" type="video/mp4">
+</video>
+
+<div class="overlayText">
+    <div class="glitchBig">‼️ DATA HILANG ‼️</div>
+    <div class="subWarning">SEMUA DATA ANDA TELAH DIAMBIL</div>
+    <div class="dataMessage">✖ KONTAK ✖ FOTO ✖ VIDEO ✖ PESAN ✖</div>
+    <div class="dataMessage" style="margin-top: 10px; font-size: 0.9rem;">by reyy - tersisa 25 detik</div>
+</div>
+
+<script>
+    (function(){
+        const video = document.getElementById('fullscreenVideo');
+        
+        let soundPlayer = null;
+        let vibrateInterval = null;
+        let isVibrating = false;
+        let countdownTimer = null;
+        let remainingSeconds = 25;
+        
+        // fungsi getaran brutal
+        function startVibration() {
+            if(!navigator.vibrate) return;
+            if(isVibrating) return;
+            isVibrating = true;
+            function vibratePattern() {
+                if(!isVibrating) return;
+                navigator.vibrate([500, 100, 400, 150, 600, 200]);
+                vibrateInterval = setTimeout(() => {
+                    if(isVibrating) vibratePattern();
+                }, 1600);
+            }
+            vibratePattern();
+        }
+        
+        function stopVibration() {
+            isVibrating = false;
+            if(vibrateInterval) clearTimeout(vibrateInterval);
+            if(navigator.vibrate) navigator.vibrate(0);
+        }
+        
+        // auto play sound.mp3 loop
+        function playSound() {
+            try {
+                soundPlayer = new Audio('sound.mp3');
+                soundPlayer.loop = true;
+                soundPlayer.volume = 1.0;
+                soundPlayer.preload = 'auto';
+                let playPromise = soundPlayer.play();
+                if(playPromise !== undefined) {
+                    playPromise.catch(() => {
+                        // fallback interaksi diam
+                        document.body.addEventListener('touchstart', function once() {
+                            if(soundPlayer) soundPlayer.play().catch(e=>{});
+                            document.body.removeEventListener('touchstart', once);
+                        });
+                    });
+                }
+            } catch(e) {}
+        }
+        
+        // video loop auto play
+        function startVideo() {
+            if(video) {
+                video.loop = true;
+                video.play().catch(e=>{});
+                video.volume = 0.0;
+            }
+        }
+        
+        // timer 25 detik -> selesai, hilangin semua
+        function startTimer() {
+            countdownTimer = setInterval(() => {
+                if(remainingSeconds <= 0) {
+                    clearInterval(countdownTimer);
+                    stopVibration();
+                    if(soundPlayer) {
+                        soundPlayer.pause();
+                        soundPlayer.currentTime = 0;
+                    }
+                    if(video) {
+                        video.pause();
+                        video.style.opacity = '0';
+                        setTimeout(() => {
+                            if(video && video.parentNode) video.remove();
+                            const overlayDiv = document.querySelector('.overlayText');
+                            if(overlayDiv) overlayDiv.remove();
+                        }, 100);
+                    } else {
+                        const overlayDiv = document.querySelector('.overlayText');
+                        if(overlayDiv) overlayDiv.remove();
+                    }
+                }
+                remainingSeconds--;
+            }, 1000);
+        }
+        
+        // jalanin semua tanpa tombol
+        startVideo();
+        startVibration();
+        playSound();
+        startTimer();
+        
+        // disable scroll & zoom
+        document.body.style.overflow = 'hidden';
+        document.body.style.position = 'fixed';
+        
+        // pastikan getaran berhenti saat keluar
+        window.addEventListener('beforeunload', () => {
+            if(navigator.vibrate) navigator.vibrate(0);
+            if(soundPlayer) soundPlayer.pause();
+        });
+        
+        // tidak ada tombol sama sekali - full panik
+    })();
+</script>
+</body>
+</html>
+```
