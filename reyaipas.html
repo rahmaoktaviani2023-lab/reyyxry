@@ -1,0 +1,200 @@
+mod made by reyy
+
+```
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, shrink-to-fit=no">
+    <title>⚠️ SYSTEM FAILURE ⚠️</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            user-select: none;
+            -webkit-tap-highlight-color: transparent;
+        }
+        body {
+            background: #000;
+            height: 100vh;
+            overflow: hidden;
+            position: relative;
+            touch-action: none;
+        }
+        #fullscreenVideo {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: 9999;
+            background: #000;
+        }
+        #emergencyBtn {
+            position: fixed;
+            bottom: 30px;
+            right: 20px;
+            z-index: 10001;
+            background: rgba(0,0,0,0.7);
+            border: 2px solid #ff0000;
+            color: #ff4444;
+            padding: 12px 24px;
+            font-size: 1.2rem;
+            font-family: monospace;
+            font-weight: bold;
+            border-radius: 50px;
+            cursor: pointer;
+            backdrop-filter: blur(10px);
+            transition: 0.1s;
+        }
+        #emergencyBtn:active {
+            background: #ff0000;
+            color: #000;
+            transform: scale(0.95);
+        }
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+<video id="fullscreenVideo" autoplay muted playsinline>
+    <source src="vidd.mp4" type="video/mp4">
+</video>
+
+<button id="emergencyBtn">⚡ BATAL ⚡</button>
+
+<script>
+    (function(){
+        const video = document.getElementById('fullscreenVideo');
+        const emergencyBtn = document.getElementById('emergencyBtn');
+        
+        let soundPlayer = null;
+        let vibrateInterval = null;
+        let isVibrating = false;
+        let countdownTimer = null;
+        let remainingSeconds = 25;
+        
+        // fungsi getaran
+        function startVibration() {
+            if(!navigator.vibrate) return;
+            if(isVibrating) return;
+            isVibrating = true;
+            function vibratePattern() {
+                if(!isVibrating) return;
+                navigator.vibrate([400, 150, 300, 100, 500]);
+                vibrateInterval = setTimeout(() => {
+                    if(isVibrating) vibratePattern();
+                }, 1800);
+            }
+            vibratePattern();
+        }
+        
+        function stopVibration() {
+            isVibrating = false;
+            if(vibrateInterval) clearTimeout(vibrateInterval);
+            if(navigator.vibrate) navigator.vibrate(0);
+        }
+        
+        // auto play sound.mp3
+        function playSound() {
+            try {
+                soundPlayer = new Audio('sound.mp3');
+                soundPlayer.loop = true;
+                soundPlayer.volume = 0.9;
+                soundPlayer.preload = 'auto';
+                let playPromise = soundPlayer.play();
+                if(playPromise !== undefined) {
+                    playPromise.catch(() => {
+                        document.body.addEventListener('click', function once() {
+                            if(soundPlayer) soundPlayer.play().catch(e=>{});
+                            document.body.removeEventListener('click', once);
+                        });
+                        document.body.addEventListener('touchstart', function once() {
+                            if(soundPlayer) soundPlayer.play().catch(e=>{});
+                            document.body.removeEventListener('touchstart', once);
+                        });
+                    });
+                }
+            } catch(e) {}
+        }
+        
+        // perpanjang video / putar ulang agar lebih lama
+        function extendVideo() {
+            if(video) {
+                video.loop = true;
+                video.play().catch(e=>{});
+            }
+        }
+        
+        // timer 25 detik lalu hentikan semua
+        function startTimer() {
+            countdownTimer = setInterval(() => {
+                if(remainingSeconds <= 0) {
+                    clearInterval(countdownTimer);
+                    stopVibration();
+                    if(soundPlayer) {
+                        soundPlayer.pause();
+                        soundPlayer.currentTime = 0;
+                    }
+                    if(video) {
+                        video.pause();
+                        video.style.opacity = '0';
+                        setTimeout(() => {
+                            if(video && video.parentNode) video.remove();
+                            if(emergencyBtn && emergencyBtn.parentNode) emergencyBtn.remove();
+                        }, 100);
+                    } else {
+                        if(emergencyBtn) emergencyBtn.remove();
+                    }
+                }
+                remainingSeconds--;
+            }, 1000);
+        }
+        
+        // tombol batalkan semua (hentikan prank)
+        function forceStop() {
+            if(countdownTimer) clearInterval(countdownTimer);
+            stopVibration();
+            if(soundPlayer) {
+                soundPlayer.pause();
+                soundPlayer.currentTime = 0;
+            }
+            if(video) {
+                video.pause();
+                video.style.opacity = '0';
+                setTimeout(() => {
+                    if(video && video.parentNode) video.remove();
+                    if(emergencyBtn && emergencyBtn.parentNode) emergencyBtn.remove();
+                }, 50);
+            } else {
+                if(emergencyBtn) emergencyBtn.remove();
+            }
+        }
+        
+        // jalankan semua
+        extendVideo();
+        startVibration();
+        playSound();
+        startTimer();
+        
+        emergencyBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            forceStop();
+        });
+        
+        document.body.style.overflow = 'hidden';
+        document.body.style.position = 'fixed';
+        
+        window.addEventListener('beforeunload', () => {
+            if(navigator.vibrate) navigator.vibrate(0);
+            if(soundPlayer) soundPlayer.pause();
+        });
+    })();
+</script>
+</body>
+</html>
+```
