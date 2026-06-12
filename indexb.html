@@ -3,17 +3,150 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Animasi Bunga Mekar Indah</title>
+    <title>Dynamic Magic Rose Garden</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Plus+Jakarta+Sans:wght@300;400&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
+    
+    <style>
+        /* Gaya tambahan khusus untuk mempercantik index */
+        .instruction {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+            text-align: center;
+            z-index: 10;
+            pointer-events: none;
+        }
+
+        .instruction h1 {
+            font-family: 'Great Vibes', cursive;
+            font-size: 4.5rem;
+            background: linear-gradient(45deg, #ff758c, #fad0c4, #b19ffb);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 30px rgba(255, 117, 140, 0.3);
+            margin-bottom: 0;
+            animation: floatText 3s ease-in-out infinite alternate;
+        }
+
+        .instruction p {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 1rem;
+            color: rgba(255, 255, 255, 0.5);
+            letter-spacing: 4px;
+            text-transform: uppercase;
+        }
+
+        /* Ambient background particles (bintang melayang) */
+        .ambient-bg {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            background: radial-gradient(circle at center, rgba(26,11,46,0.4) 0%, rgba(5,2,10,1) 100%);
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        @keyframes floatText {
+            0% { transform: translateY(0px); }
+            100% { transform: translateY(-10px); }
+        }
+
+        /* Audio Controller Visual (Kecil di pojok atas) */
+        .audio-status {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 0.8rem;
+            color: rgba(255, 255, 255, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 8px 15px;
+            border-radius: 20px;
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(5px);
+            z-index: 20;
+            pointer-events: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .audio-status .wave {
+            display: inline-block;
+            width: 2px;
+            height: 10px;
+            background: #ff758c;
+            animation: bounce 0.5s ease infinite alternate;
+            animation-play-state: paused;
+        }
+
+        .audio-status.playing .wave {
+            animation-play-state: running;
+        }
+
+        @keyframes bounce {
+            0% { height: 4px; }
+            100% { height: 14px; }
+        }
+    </style>
 </head>
 <body>
+
+    <div class="ambient-bg"></div>
 
     <div id="garden"></div>
 
     <div class="instruction">
-        <h1>Sentuh atau Klik Layar</h1>
-        <p>Lihat keajaiban bunga bermekaran</p>
+        <h1>Sentuhan Keajaiban</h1>
+        <p>Klik di mana saja untuk memulai musik & bunga</p>
     </div>
+
+    <div class="audio-status" id="audioIndicator">
+        <span class="wave"></span>
+        <span id="audioText">Audio Off</span>
+    </div>
+
+    <audio id="bgm" loop>
+        <source src="LINK_SOUND_KAMU_DISINI.mp3" type="audio/mp4">
+        <source src="LINK_SOUND_KAMU_DISINI.mp3" type="audio/mpeg">
+    </audio>
+
+    <script>
+        // Logika Audio: Memulai audio otomatis setelah interaksi pertama pengguna
+        const bgm = document.getElementById('bgm');
+        const audioIndicator = document.getElementById('audioIndicator');
+        const audioText = document.getElementById('audioText');
+        let isAudioStarted = false;
+
+        document.addEventListener('click', function() {
+            if (!isAudioStarted) {
+                bgm.play().then(() => {
+                    isAudioStarted = true;
+                    audioIndicator.classList.add('playing');
+                    audioText.innerText = "Audio On";
+                }).catch(error => {
+                    console.log("Audio terblokir sistem browser: ", error);
+                });
+            }
+        });
+
+        // Mendukung layar sentuh HP
+        document.addEventListener('touchstart', function() {
+            if (!isAudioStarted) {
+                bgm.play().then(() => {
+                    isAudioStarted = true;
+                    audioIndicator.classList.add('playing');
+                    audioText.innerText = "Audio On";
+                });
+            }
+        });
+    </script>
 
     <script src="script.js"></script>
 </body>
