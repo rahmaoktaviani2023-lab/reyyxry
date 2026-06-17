@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy 16th Birthday, Rahma Oktaviani 🌹</title>
+<style>
+  :root{
+    --plum-deep:#2b1320;
+    --plum-mid:#4a1f38;
+    --blush:#f6d9d9;
+    --blush-soft:#fbeaea;
+    --rose:#e2879e;
+    --rose-deep:#c25b78;
+    --gold:#d8b46a;
+    --gold-bright:#f0d28e;
+    --cream:#fff8f0;
+    --serif: 'Playfair Display', Georgia, 'Times New Roman', serif;
+    --script: 'Great Vibes', 'Brush Script MT', cursive;
+    --sans: 'Poppins', 'Segoe UI', sans-serif;
+  }
+
+  @font-face{
+    font-family:'Great Vibes';
+    src: local('Great Vibes');
+  }
+
+  *{box-sizing:border-box;}
+
+  html,body{
+    margin:0;
+    padding:0;
+    min-height:100%;
+    background: radial-gradient(ellipse at 50% 0%, var(--plum-mid) 0%, var(--plum-deep) 55%, #170a10 100%);
+    font-family: var(--sans);
+    color: var(--cream);
+    overflow-x:hidden;
+  }
+
+  /* ====== Floating petals ====== */
+  .petals{
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+    z-index:2;
+    overflow:hidden;
+  }
+  .petal{
+    position:absolute;
+    top:-10%;
+    font-size: 18px;
+    opacity:0.85;
+    animation: fall linear infinite;
+    filter: drop-shadow(0 0 4px rgba(216,180,106,0.3));
+  }
+  @keyframes fall{
+    0%{ transform: translateY(0) translateX(0) rotate(0deg); opacity:0; }
+    8%{ opacity:0.9; }
+    100%{ transform: translateY(110vh) translateX(var(--drift,40px)) rotate(360deg); opacity:0; }
+  }
+
+  /* ====== Stars / sparkle bg ====== */
+  .stars{
+    position:fixed;
+    inset:0;
+    z-index:0;
+    background-image:
+      radial-gradient(2px 2px at 20% 30%, rgba(240,210,142,0.6) 0%, transparent 60%),
+      radial-gradient(1.5px 1.5px at 70% 60%, rgba(255,255,255,0.5) 0%, transparent 60%),
+      radial-gradient(2px 2px at 85% 20%, rgba(240,210,142,0.5) 0%, transparent 60%),
+      radial-gradient(1px 1px at 40% 80%, rgba(255,255,255,0.4) 0%, transparent 60%),
+      radial-gradient(1.5px 1.5px at 55% 15%, rgba(240,210,142,0.4) 0%, transparent 60%),
+      radial-gradient(1px 1px at 10% 65%, rgba(255,255,255,0.4) 0%, transparent 60%),
+      radial-gradient(1.5px 1.5px at 90% 80%, rgba(240,210,142,0.4) 0%, transparent 60%);
+    animation: twinkle 4s ease-in-out infinite alternate;
+  }
+  @keyframes twinkle{
+    0%{ opacity:0.5; }
+    100%{ opacity:1; }
+  }
+
+  .wrap{
+    position:relative;
+    z-index:3;
+    max-width: 640px;
+    margin: 0 auto;
+    padding: 48px 22px 80px;
+  }
+
+  /* ====== Intro / loading curtain ====== */
+  #curtain{
+    position:fixed;
+    inset:0;
+    z-index:50;
+    background: linear-gradient(135deg, var(--plum-deep), #170a10);
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    transition: opacity 1s ease, visibility 1s ease;
+    padding: 24px;
+  }
+  #curtain.hide{
+    opacity:0;
+    visibility:hidden;
+    pointer-events:none;
+  }
+  .curtain-heart{
+    font-size: 46px;
+    color: var(--rose);
+    animation: pulse 1.4s ease-in-out infinite;
+    margin-bottom: 18px;
+  }
+  @keyframes pulse{
+    0%,100%{ transform:scale(1); }
+    50%{ transform:scale(1.18); }
+  }
+  .curtain-text{
+    font-family: var(--serif);
+    font-style: italic;
+    letter-spacing: 1px;
+    color: var(--blush-soft);
+    font-size: 16px;
+    margin-bottom: 26px;
+  }
+  .open-btn{
+    font-family: var(--sans);
+    font-weight:600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    font-size: 13px;
+    color: var(--plum-deep);
+    background: linear-gradient(135deg, var(--gold-bright), var(--gold));
+    border:none;
+    padding: 15px 34px;
+    border-radius: 999px;
+    cursor:pointer;
+    box-shadow: 0 8px 24px rgba(216,180,106,0.35);
+    transition: transform .25s ease, box-shadow .25s ease;
+  }
+  .open-btn:hover{
+    transform: translateY(-2px) scale(1.03);
+    box-shadow: 0 12px 30px rgba(216,180,106,0.5);
+  }
+  .open-btn:active{ transform: scale(0.97); }
+
+  /* ====== Header ====== */
+  .eyebrow{
+    text-align:center;
+    font-size: 12px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--gold-bright);
+    opacity:0.85;
+    margin-bottom: 10px;
+    font-weight:600;
+  }
+  .title-block{
+    text-align:center;
+    margin-bottom: 6px;
+  }
+  .title-script{
+    font-family: var(--script), var(--serif);
+    font-size: 64px;
+    line-height: 1.1;
+    color: var(--blush-soft);
+    text-shadow: 0 2px 18px rgba(226,135,158,0.45);
+    margin: 0;
+  }
+  .title-name{
+    font-family: var(--serif);
+    font-weight: 700;
+    font-size: 38px;
+    letter-spacing: 0.5px;
+    margin: 6px 0 0;
+    background: linear-gradient(90deg, var(--gold-bright), var(--blush), var(--rose), var(--gold-bright));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    background-size: 200% auto;
+    animation: shine 6s linear infinite;
+  }
+  @keyframes shine{
+    0%{ background-position: 0% center; }
+    100%{ background-position: 200% center; }
+  }
+  .age-pill{
+    display:inline-block;
+    margin: 16px auto 0;
+    padding: 6px 22px;
+    border: 1px solid rgba(240,210,142,0.5);
+    border-radius: 999px;
+    font-family: var(--serif);
+    font-size: 14px;
+    letter-spacing: 1px;
+    color: var(--gold-bright);
+    background: rgba(240,210,142,0.06);
+  }
+  .age-row{ text-align:center; }
+
+  .divider{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap: 12px;
+    margin: 30px 0;
+    color: var(--gold);
+    opacity:0.8;
+  }
+  .divider::before, .divider::after{
+    content:'';
+    height:1px;
+    width: 60px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  }
+
+  /* ====== Countdown ====== */
+  .countdown-label{
+    text-align:center;
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 15px;
+    color: var(--blush-soft);
+    margin-bottom: 18px;
+    letter-spacing: 0.3px;
+  }
+  .countdown-label b{ color: var(--gold-bright); font-style:normal; }
+  .countdown{
+    display:flex;
+    justify-content:center;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-bottom: 8px;
+  }
+  .cd-box{
+    background: linear-gradient(160deg, rgba(255,255,255,0.07), rgba(255,255,255,0.02));
+    border: 1px solid rgba(240,210,142,0.25);
+    border-radius: 16px;
+    padding: 14px 8px;
+    min-width: 70px;
+    text-align:center;
+    backdrop-filter: blur(2px);
+  }
+  .cd-num{
+    font-family: var(--serif);
+    font-size: 30px;
+    font-weight:700;
+    color: var(--gold-bright);
+    line-height:1;
+  }
+  .cd-unit{
+    font-size: 10px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--blush);
+    margin-top: 6px;
+    opacity:0.8;
+  }
+  .countdown-done{
+    text-align:center;
+    font-family:var(--serif);
+    font-size: 20px;
+    color: var(--gold-bright);
+    display:none;
+  }
+
+  /* ====== Photo ====== */
+  .photo-stage{
+    display:flex;
+    justify-content:center;
+    margin: 38px 0 18px;
+  }
+  .polaroid{
+    background: var(--cream);
+    padding: 16px 16px 50px;
+    border-radius: 4px;
+    box-shadow: 0 18px 40px rgba(0,0,0,0.45), 0 0 0 1px rgba(255,255,255,0.05);
+    transform: rotate(-2deg);
+    transition: transform .4s ease;
+    width: min(78vw, 300px);
+  }
+  .polaroid:hover{ transform: rotate(0deg) scale(1.02); }
+  .polaroid-frame{
+    width:100%;
+    aspect-ratio: 4 / 5;
+    background:
+      linear-gradient(160deg, #3a1d2c, #1c0d15) ;
+    border-radius: 2px;
+    overflow:hidden;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    position:relative;
+  }
+  .polaroid-frame img{
+    width:100%;
+    height:100%;
+    object-fit: cover;
+    display:block;
+  }
+  .polaroid-placeholder{
+    text-align:center;
+    color: rgba(255,255,255,0.55);
+    font-size: 12px;
+    padding: 18px;
+    line-height:1.6;
+  }
+  .polaroid-placeholder .ph-icon{
+    font-size: 30px;
+    display:block;
+    margin-bottom: 8px;
+  }
+  .polaroid-caption{
+    text-align:center;
+    font-family: var(--script);
+    font-size: 22px;
+    color: #5a3142;
+    margin-top: 12px;
+  }
+
+  /* ====== Letter / message ====== */
+  .letter{
+    background: linear-gradient(160deg, rgba(255,255,255,0.05), rgba(255,255,255,0.015));
+    border: 1px solid rgba(240,210,142,0.18);
+    border-radius: 22px;
+    padding: 32px 26px;
+    margin-top: 20px;
+    position:relative;
+  }
+  .letter::before{
+    content:'❝';
+    position:absolute;
+    top: -18px;
+    left: 24px;
+    font-size: 46px;
+    color: var(--gold);
+    background: var(--plum-deep);
+    padding: 0 8px;
+    font-family: var(--serif);
+  }
+  .letter p{
+    font-size: 15.5px;
+    line-height: 1.95;
+    color: var(--blush-soft);
+    margin: 0 0 16px;
+  }
+  .letter p:last-child{ margin-bottom:0; }
+  .letter .highlight{
+    color: var(--gold-bright);
+    font-weight:600;
+  }
+  .letter .lang-en{
+    font-style: italic;
+    color: var(--blush);
+  }
+  .signoff{
+    text-align:right;
+    margin-top: 22px;
+  }
+  .signoff .from{
+    font-family: var(--script);
+    font-size: 30px;
+    color: var(--rose);
+    display:block;
+  }
+  .signoff small{
+    color: var(--blush);
+    font-size: 11px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    opacity:0.7;
+  }
+
+  /* ====== Wishes grid ====== */
+  .wishes{
+    margin-top: 36px;
+  }
+  .wishes-title{
+    text-align:center;
+    font-family: var(--serif);
+    font-style: italic;
+    color: var(--gold-bright);
+    font-size: 17px;
+    margin-bottom: 18px;
+  }
+  .wish-item{
+    display:flex;
+    gap: 14px;
+    align-items:flex-start;
+    padding: 14px 4px;
+    border-bottom: 1px dashed rgba(240,210,142,0.18);
+  }
+  .wish-item:last-child{ border-bottom:none; }
+  .wish-icon{
+    font-size: 20px;
+    flex-shrink:0;
+    margin-top: 2px;
+  }
+  .wish-text{
+    font-size: 14px;
+    line-height: 1.8;
+    color: var(--blush-soft);
+  }
+  .wish-text b{ color: var(--gold-bright); }
+
+  /* ====== Music control ====== */
+  .music-btn{
+    position: fixed;
+    bottom: 22px;
+    right: 18px;
+    z-index: 30;
+    width: 54px;
+    height: 54px;
+    border-radius: 50%;
+    border: 1px solid rgba(240,210,142,0.4);
+    background: linear-gradient(160deg, var(--plum-mid), var(--plum-deep));
+    color: var(--gold-bright);
+    font-size: 22px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    cursor:pointer;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+    transition: transform .25s ease;
+  }
+  .music-btn:hover{ transform: scale(1.08); }
+  .music-btn.spinning{ animation: spin 3.5s linear infinite; }
+  @keyframes spin{ from{transform:rotate(0deg);} to{transform:rotate(360deg);} }
+
+  footer{
+    text-align:center;
+    margin-top: 50px;
+    font-size: 11px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: rgba(255,248,240,0.35);
+  }
+
+  @media (max-width: 380px){
+    .title-script{ font-size: 50px; }
+    .title-name{ font-size: 28px; }
+    .cd-box{ min-width: 60px; padding: 10px 6px; }
+    .cd-num{ font-size: 24px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="stars"></div>
+<div class="petals" id="petals"></div>
+
+<!-- Curtain / opening -->
+<div id="curtain">
+  <div class="curtain-heart">💌</div>
+  <div class="curtain-text">A little something for you, Rahma...</div>
+  <button class="open-btn" id="openBtn">Buka Ucapannya</button>
+</div>
+
+<!-- Background music: letakkan file birthday1.mp3 di folder yang sama dengan HTML ini -->
+<audio id="bgMusic" loop>
+  <source src="birthday1.mp3" type="audio/mpeg">
+  <source src="https://actions.google.com/sounds/v1/foley/birthday_song.ogg" type="audio/ogg">
+</audio>
+
+<div class="wrap">
+
+  <div class="eyebrow">Untuk seseorang yang sangat istimewa</div>
+  <div class="title-block">
+    <p class="title-script">Happy Birthday</p>
+    <h1 class="title-name">RAHMA OKTAVIANI</h1>
+  </div>
+  <div class="age-row">
+    <span class="age-pill">✦ SWEET 16 ✦ 31 AGUSTUS ✦</span>
+  </div>
+
+  <div class="divider">♥</div>
+
+  <!-- Countdown -->
+  <div class="countdown-label">Menuju hari spesialmu, <b>Sayangku</b> &mdash; the countdown begins:</div>
+  <div class="countdown" id="countdown">
+    <div class="cd-box"><div class="cd-num" id="cd-days">00</div><div class="cd-unit">Hari</div></div>
+    <div class="cd-box"><div class="cd-num" id="cd-hours">00</div><div class="cd-unit">Jam</div></div>
+    <div class="cd-box"><div class="cd-num" id="cd-min">00</div><div class="cd-unit">Menit</div></div>
+    <div class="cd-box"><div class="cd-num" id="cd-sec">00</div><div class="cd-unit">Detik</div></div>
+  </div>
+  <div class="countdown-done" id="countdownDone">🎉 IT'S YOUR DAY, SAYANG! HAPPY 16TH BIRTHDAY! 🎉</div>
+
+  <!-- Photo -->
+  <div class="photo-stage">
+    <div class="polaroid">
+      <div class="polaroid-frame" id="photoFrame">
+        <img src="foto1.jpg" alt="Foto Rahma Oktaviani" id="mainPhoto"
+             onerror="this.style.display='none'; document.getElementById('photoPlaceholder').style.display='flex';">
+        <div class="polaroid-placeholder" id="photoPlaceholder" style="display:none; flex-direction:column; align-items:center; justify-content:center; height:100%; position:absolute; inset:0;">
+          <span class="ph-icon">🌸</span>
+          Letakkan file <b>foto1.jpg</b><br>di folder yang sama<br>(disarankan rasio 4:5 / 1080×1350px)
+        </div>
+      </div>
+      <div class="polaroid-caption">my forever girl</div>
+    </div>
+  </div>
+
+  <div class="divider">♥</div>
+
+  <!-- Letter -->
+  <div class="letter">
+    <p>
+      Sayangku <span class="highlight">Rahma Oktaviani</span>, hari ini boleh masih tanggal yang lain di kalender,
+      tapi hatiku sudah tidak sabar merayakan harimu. <span class="lang-en">Today, tomorrow, and every day until the 31st of August — my heart is already celebrating you.</span>
+    </p>
+    <p>
+      Enam belas tahun yang lalu, dunia ini jadi lebih indah karena ada kamu di dalamnya. Dan sejak hari aku mengenalmu,
+      duniaku jadi lebih berwarna, lebih hangat, lebih punya arti. <span class="highlight">Happy Sweet Sixteen, my love.</span>
+    </p>
+    <p>
+      <span class="lang-en">You are the softest place I know, the calmest storm, the prettiest good morning text I get every day.</span>
+      Kamu bukan cuma orang yang aku sayang — kamu rumah yang selalu ingin aku pulangi, di mana pun aku berada.
+    </p>
+    <p>
+      Semoga di usia barumu ini, semua mimpi-mimpi kecilmu pelan-pelan jadi kenyataan. Semoga kamu selalu dikelilingi
+      orang-orang yang menyayangimu seperti aku menyayangimu — bahkan lebih. <span class="highlight">Tetap jadi Rahma yang ceria, yang baik hati, dan yang selalu bikin aku jatuh cinta berkali-kali.</span>
+    </p>
+    <p>
+      <span class="lang-en">No matter how far, no matter how busy life gets — you will always be my favorite person, my favorite good night, my favorite forever.</span>
+      Selamat ulang tahun, sayangku. I love you, today and always. 🌹
+    </p>
+    <div class="signoff">
+      <span class="from">Reyy</span>
+      <small>with all my love, for you</small>
+    </div>
+  </div>
+
+  <!-- Wishes -->
+  <div class="wishes">
+    <div class="wishes-title">— Doa kecil untukmu, Sayang —</div>
+    <div class="wish-item">
+      <div class="wish-icon">🌷</div>
+      <div class="wish-text"><b>Sehat selalu</b>, biar kita bisa bikin banyak kenangan baru bersama.</div>
+    </div>
+    <div class="wish-item">
+      <div class="wish-icon">✨</div>
+      <div class="wish-text"><b>Semua cita-citamu tercapai</b>, satu per satu, di waktu yang tepat.</div>
+    </div>
+    <div class="wish-item">
+      <div class="wish-icon">💌</div>
+      <div class="wish-text"><b>Selalu bahagia</b>, dengan atau tanpa alasan, karena kamu pantas untuk itu.</div>
+    </div>
+    <div class="wish-item">
+      <div class="wish-icon">💍</div>
+      <div class="wish-text"><b>Tetap jadi kamu</b> — yang manis, yang lucu, yang paling aku sayang sedunia.</div>
+    </div>
+  </div>
+
+  <footer>made with love by reyy &middot; for rahma oktaviani</footer>
+
+</div>
+
+<!-- Music toggle -->
+<button class="music-btn" id="musicBtn" title="Putar / pause musik">🎵</button>
+
+<script>
+  // ===== Curtain open =====
+  document.getElementById('openBtn').addEventListener('click', function(){
+    document.getElementById('curtain').classList.add('hide');
+    const music = document.getElementById('bgMusic');
+    music.volume = 0.55;
+    music.play().then(()=>{
+      document.getElementById('musicBtn').classList.add('spinning');
+    }).catch(()=>{ /* autoplay might be blocked, user can tap the music button */ });
+  });
+
+  // ===== Music toggle button =====
+  const musicBtn = document.getElementById('musicBtn');
+  const bgMusic = document.getElementById('bgMusic');
+  musicBtn.addEventListener('click', function(){
+    if(bgMusic.paused){
+      bgMusic.play();
+      musicBtn.classList.add('spinning');
+      musicBtn.textContent = '🎵';
+    }else{
+      bgMusic.pause();
+      musicBtn.classList.remove('spinning');
+      musicBtn.textContent = '🔇';
+    }
+  });
+
+  // ===== Countdown to 31 August =====
+  function getNextAug31(){
+    const now = new Date();
+    let year = now.getFullYear();
+    let target = new Date(year, 7, 31, 0, 0, 0); // month 7 = August
+    if(target.getTime() < now.getTime()){
+      target = new Date(year + 1, 7, 31, 0, 0, 0);
+    }
+    return target;
+  }
+
+  function updateCountdown(){
+    const target = getNextAug31();
+    const now = new Date();
+    const diff = target.getTime() - now.getTime();
+
+    if(diff <= 0){
+      document.getElementById('countdown').style.display = 'none';
+      document.getElementById('countdownDone').style.display = 'block';
+      return;
+    }
+
+    const sec = Math.floor(diff / 1000);
+    const days = Math.floor(sec / 86400);
+    const hours = Math.floor((sec % 86400) / 3600);
+    const mins = Math.floor((sec % 3600) / 60);
+    const secs = sec % 60;
+
+    document.getElementById('cd-days').textContent = String(days).padStart(2,'0');
+    document.getElementById('cd-hours').textContent = String(hours).padStart(2,'0');
+    document.getElementById('cd-min').textContent = String(mins).padStart(2,'0');
+    document.getElementById('cd-sec').textContent = String(secs).padStart(2,'0');
+  }
+  updateCountdown();
+  setInterval(updateCountdown, 1000);
+
+  // ===== Floating petals =====
+  const petalEmojis = ['🌸','💗','🌹','✨'];
+  const petalsContainer = document.getElementById('petals');
+  function spawnPetal(){
+    const p = document.createElement('div');
+    p.className = 'petal';
+    p.textContent = petalEmojis[Math.floor(Math.random()*petalEmojis.length)];
+    const left = Math.random()*100;
+    const duration = 8 + Math.random()*8;
+    const drift = (Math.random()*80 - 40) + 'px';
+    p.style.left = left + 'vw';
+    p.style.setProperty('--drift', drift);
+    p.style.fontSize = (14 + Math.random()*12) + 'px';
+    p.style.animationDuration = duration + 's';
+    petalsContainer.appendChild(p);
+    setTimeout(()=>{ p.remove(); }, duration*1000 + 500);
+  }
+  setInterval(spawnPetal, 700);
+  for(let i=0;i<6;i++){ setTimeout(spawnPetal, i*300); }
+</script>
+
+</body>
+</html>
